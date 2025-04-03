@@ -3,3 +3,5 @@ sources:
     handler:
       graphql:
         endpoint: http://localhost:8080/graphql
+        operationHeaders:
+          Authorization: "{context.headers.authorization}"
