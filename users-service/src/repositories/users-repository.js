@@ -1,11 +1,6 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 
-const createUser = async (email, pseudo, password, role) => {
-    const hashedPassword = await bcrypt.hash(password, 10)
-    return User.create({ email, pseudo, password: hashedPassword, role })
-}
-
 const getUserByEmail = async (email) => {
     return User.findOne({ where: { email } })
 }
@@ -33,4 +28,4 @@ const deleteUser = async (id) => {
     return user;
 };
 
-module.exports = { createUser, getAllUsers, getUserByEmail, updateUser, deleteUser };
+module.exports = { getAllUsers, getUserByEmail, updateUser, deleteUser };

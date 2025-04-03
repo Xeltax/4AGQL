@@ -1,5 +1,5 @@
 const { GraphQLObjectType, GraphQLString, GraphQLList } = require("graphql");
-const { createUser, getAllUsers, getUserByEmail, updateUser, deleteUser } = require("../repositories/users-repository");
+const { getAllUsers, getUserByEmail, updateUser, deleteUser } = require("../repositories/users-repository");
 const UserType = require("./types");
 
 const RootQuery = new GraphQLObjectType({
@@ -20,16 +20,6 @@ const RootQuery = new GraphQLObjectType({
 const Mutations = new GraphQLObjectType({
     name: 'Mutations',
     fields: {
-        registerUser: {
-            type: UserType,
-            args: {
-                email: { type: GraphQLString },
-                pseudo : { type: GraphQLString },
-                password: { type: GraphQLString },
-                role: { type: GraphQLString },
-            },
-            resolve: async (_, { email, pseudo, password, role }) => await createUser(email, pseudo, password, role),
-        },
         updateUser: {
             type: UserType,
             args: {
