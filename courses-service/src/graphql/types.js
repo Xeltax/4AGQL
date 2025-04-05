@@ -1,4 +1,4 @@
-const { GraphQLObjectType, GraphQLString, GraphQLList } = require("graphql");
+const { GraphQLObjectType, GraphQLString, GraphQLList } = require('graphql');
 
 const UserType = new GraphQLObjectType({
     name: 'User',
@@ -8,7 +8,7 @@ const UserType = new GraphQLObjectType({
         pseudo: { type: GraphQLString },
         role: { type: GraphQLString },
         enrolledCourses: { type: new GraphQLList(CourseType) }, // One to many
-        taughtCourses: { type: new GraphQLList(CourseType) }    // Many to one
+        taughtCourses: { type: new GraphQLList(CourseType) }    // Many to Many
     })
 })
 
@@ -22,4 +22,4 @@ const CourseType = new GraphQLObjectType({
     })
 })
 
-module.exports = UserType
+module.exports = { CourseType, UserType }

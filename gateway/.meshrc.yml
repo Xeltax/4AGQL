@@ -5,3 +5,9 @@ sources:
         endpoint: http://localhost:8080/graphql
         operationHeaders:
           Authorization: "{context.headers.authorization}"
+  - name: classes-service
+    handler:
+      graphql:
+        endpoint: http://localhost:8081/graphql
+        operationHeaders:
+          Authorization: "{context.headers.authorization}"

@@ -1,4 +1,5 @@
 const User = require('../models/user.model');
+const Course = require('../models/course.model')
 const bcrypt = require('bcryptjs');
 
 const getUserByEmail = async (email) => {
@@ -6,7 +7,20 @@ const getUserByEmail = async (email) => {
 }
 
 const getAllUsers = async () => {
-    return User.findAll()
+    return User.findAll({
+        include: [
+            {
+                model: Course,
+                as: 'enrolledCourses',
+                through: { attributes: [] }, // Exclude join table data
+            },
+            {
+                model: Course,
+                as: 'taughtCourses',
+                foreignKey: 'professorId'
+            }
+        ]
+    })
 }
 
 const updateUser = async (id, { email, pseudo, password }) => {
