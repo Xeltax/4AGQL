@@ -97,7 +97,7 @@ const updateCourseStudents = async (courseId, userId, action) => {
     if (!user) throw new Error('User not found');
 
     if (action === 0) {  // ADD
-        if (professor.role === 'ROLE_ADMIN') {
+        if (user.role === 'ROLE_ADMIN') {
             throw new Error('This user is not a student')
         }
         await course.addStudent(user);
