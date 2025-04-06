@@ -36,12 +36,6 @@ sequelize.sync().then(async () => {
 })
 
 const loadDefaultDataAsync = async () => {
-    // Create default users
-    await User.bulkCreate([
-        { email: 'admin@admin.com', pseudo: 'admin', password: '$2y$10$s5cJvtez0sNeW1hTzosN2.ic/QcAMqAC2xHi.IFEx3hvy9nPUxkbS', role: 'ROLE_ADMIN' },
-        { email: 'user@user.com', pseudo: 'user', password: '$2y$10$s5cJvtez0sNeW1hTzosN2.ic/QcAMqAC2xHi.IFEx3hvy9nPUxkbS', role: 'ROLE_USER' },
-    ], { validate: true, ignoreDuplicates: true })
-
     // Create courses with professor
     const admin = await User.findOne({ where: { email: 'admin@admin.com' }})
     if (!await Course.findOne({ where: { professorId: admin.id } })) {
