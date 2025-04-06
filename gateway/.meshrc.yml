@@ -11,3 +11,9 @@ sources:
         endpoint: http://localhost:8081/graphql
         operationHeaders:
           Authorization: "{context.headers.authorization}"
+  - name: grades-service
+    handler:
+      graphql:
+        endpoint: http://localhost:8082/graphql
+        operationHeaders:
+          Authorization: "{context.headers.authorization}"
