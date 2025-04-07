@@ -1,0 +1,509 @@
+/* Global styles */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.logo {
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #1890ff;
+  margin: 16px 0;
+}
+
+.logo h2 {
+  margin: 0;
+  transition: all 0.2s;
+}
+
+.main-sidebar {
+  position: relative;
+}
+
+.sidebar-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.dashboard-card {
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.stats-overview {
+  margin-bottom: 24px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .ant-layout-content {
+    margin: 12px 8px !important;
+    padding: 16px !important;
+  }
+}
+.student-row:hover {
+  background-color: #f5f5f5;
+}
+
+.status-filter {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+/* Page profil étudiant */
+.student-info-card {
+  height: 100%;
+}
+
+.student-info-card .ant-avatar {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.student-stats {
+  margin-bottom: 24px;
+}
+
+.tab-content {
+  padding: 16px 0;
+}
+
+/* Onglets de la page profil étudiant */
+.ant-tabs-tab {
+  padding: 12px 16px !important;
+}
+
+/* Responsive pour tablettes */
+@media (max-width: 992px) {
+  .student-info-card {
+    margin-bottom: 16px;
+  }
+}
+
+/* Responsive pour mobiles */
+@media (max-width: 576px) {
+  .ant-descriptions-item-label,
+  .ant-descriptions-item-content {
+    padding: 8px 12px !important;
+  }
+}
+
+.course-row:hover {
+  background-color: #f5f5f5;
+}
+
+.course-detail .ant-descriptions-item-label {
+  font-weight: 500;
+}
+
+.course-detail .ant-timeline-item {
+  padding-bottom: 12px;
+}
+
+.course-detail .ant-timeline-item-content {
+  margin-left: 20px;
+}
+
+.course-detail .ant-timeline-item-content p {
+  margin-bottom: 4px;
+}
+
+.course-detail .ant-card-head-title {
+  font-weight: 500;
+}
+
+.course-detail .ant-list-item {
+  padding: 8px 0;
+}
+
+/* Statistiques sur les cours */
+.course-stats {
+  margin-bottom: 16px;
+}
+
+.course-stats .ant-statistic-title {
+  font-size: 14px;
+}
+
+/* Tabs style pour les pages de cours */
+.ant-tabs-tab-btn {
+  font-weight: 500;
+}
+
+/* Style pour les tags de type de cours */
+.course-type-tag {
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Responsive pour tablettes */
+@media (max-width: 992px) {
+  .course-detail .ant-descriptions-item {
+    padding: 12px !important;
+  }
+}
+
+/* Responsive pour mobiles */
+@media (max-width: 576px) {
+  .course-detail .ant-descriptions-view {
+    border-radius: 4px;
+  }
+
+  .course-detail .ant-timeline-item {
+    padding-bottom: 16px;
+  }
+}
+
+/* Page liste des notes */
+.grade-row:hover {
+  background-color: #f5f5f5;
+}
+
+/* Distribution des notes dans les statistiques */
+.grade-distribution {
+  display: flex;
+  height: 20px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.grade-distribution-segment {
+  height: 100%;
+  text-align: center;
+  color: white;
+  font-size: 10px;
+  line-height: 20px;
+  font-weight: bold;
+}
+
+/* Page détail d'une note */
+.grade-detail .ant-descriptions-item-label {
+  font-weight: 500;
+}
+
+.grade-detail .ant-comment-content-author-name {
+  font-weight: 500;
+}
+
+.grade-detail .ant-timeline-item-content p {
+  margin-bottom: 4px;
+}
+
+.grade-detail .comment-list .ant-list-item {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* Tableau des notes */
+.ant-table-cell .ant-progress-circle {
+  margin-left: 8px;
+}
+
+/* Style des tags de type de note */
+.note-type-tag {
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Statistiques sur les notes */
+.grade-stats {
+  margin-bottom: 16px;
+}
+
+.grade-stats .ant-statistic-title {
+  font-size: 14px;
+}
+
+/* Responsive pour tablettes */
+@media (max-width: 992px) {
+  .grade-detail .ant-descriptions-item {
+    padding: 12px !important;
+  }
+
+  .grade-detail .ant-card-body {
+    padding: 16px;
+  }
+}
+
+/* Responsive pour mobiles */
+@media (max-width: 576px) {
+  .grade-detail .ant-descriptions-view {
+    border-radius: 4px;
+  }
+
+  .grade-detail .ant-timeline-item {
+    padding-bottom: 16px;
+  }
+}
+
+/* Styles généraux */
+.schedule-page .calendar-container {
+  min-height: 600px;
+  max-height: 800px;
+  overflow-y: auto;
+}
+
+/* Styles pour les événements dans la vue mois */
+.events {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.events .ant-badge-status {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.event-title {
+  font-size: 12px;
+}
+
+.month-cell-events {
+  text-align: center;
+  padding-top: 2px;
+}
+
+/* Vue hebdomadaire */
+.week-view {
+  border: 1px solid #f0f0f0;
+  border-radius: 4px;
+}
+
+.week-header {
+  background-color: #fafafa;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.time-column {
+  border-right: 1px solid #f0f0f0;
+  background-color: #fafafa;
+}
+
+.time-header, .day-header {
+  padding: 8px;
+  text-align: center;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.day-header.today {
+  background-color: #e6f7ff;
+}
+
+.day-name {
+  font-size: 14px;
+}
+
+.day-number {
+  font-size: 20px;
+}
+
+.day-column {
+  border-right: 1px solid #f0f0f0;
+}
+
+.day-column:last-child {
+  border-right: none;
+}
+
+.hour-row {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.hour-row:last-child {
+  border-bottom: none;
+}
+
+.time-slot {
+  height: 60px;
+  padding: 4px;
+  position: relative;
+}
+
+.time-slot.today {
+  background-color: #e6f7ff;
+}
+
+.event-card {
+  position: absolute;
+  width: 90%;
+  left: 5%;
+  z-index: 1;
+  border-radius: 4px;
+  padding: 4px;
+  color: white;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.event-time {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.event-title {
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.event-location {
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Vue jour */
+.day-view {
+  border: 1px solid #f0f0f0;
+  border-radius: 4px;
+}
+
+.day-header-large {
+  background-color: #fafafa;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 16px;
+  text-align: center;
+}
+
+.day-name-large {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.day-date-large {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.hour-block {
+  display: flex;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.hour-block:last-child {
+  border-bottom: none;
+}
+
+.hour-label {
+  width: 80px;
+  padding: 8px;
+  text-align: center;
+  font-weight: bold;
+  background-color: #fafafa;
+  border-right: 1px solid #f0f0f0;
+}
+
+.hour-content {
+  flex: 1;
+  height: 60px;
+  position: relative;
+  padding: 4px;
+}
+
+.event-card-day {
+  position: absolute;
+  width: 95%;
+  left: 2.5%;
+  z-index: 1;
+  border-radius: 4px;
+  padding: 8px;
+  color: white;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.event-professor {
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Vue liste */
+.events-list-view {
+  padding: 8px;
+}
+
+.event-date-group {
+  margin-bottom: 24px;
+}
+
+.event-date-header {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* Modal de détails d'événement */
+.event-details .ant-descriptions-item-label {
+  width: 120px;
+}
+
+/* Responsive pour tablettes */
+@media (max-width: 992px) {
+  .week-view .time-slot {
+    height: 80px;
+  }
+
+  .day-view .hour-content {
+    height: 80px;
+  }
+}
+
+/* Responsive pour mobiles */
+@media (max-width: 576px) {
+  .schedule-page .calendar-container {
+    min-height: 400px;
+  }
+
+  .week-view {
+    overflow-x: auto;
+  }
+
+  .day-view .hour-label {
+    width: 60px;
+  }
+
+  .event-card, .event-card-day {
+    font-size: 12px;
+  }
+
+  .day-header, .time-header {
+    height: 40px;
+    padding: 4px;
+  }
+
+  .day-name {
+    font-size: 12px;
+  }
+
+  .day-number {
+    font-size: 16px;
+  }
+}

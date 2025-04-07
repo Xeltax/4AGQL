@@ -1,0 +1,26 @@
+.formWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.formContainer {
+    width: 400px;
+    padding: 2rem;
+    background: white;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.noAccount {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+.noAccount > a {
+    text-decoration: underline;
+    cursor: pointer;
+}
