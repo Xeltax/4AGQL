@@ -13,3 +13,77 @@ services:
       timeout: 30s
     ports:
       - "5432:5432"
+
+  gateway:
+    build:
+      context: ./gateway
+    container_name: gateway
+    environment:
+      USERS_SERVICE_HOST: users-service
+      CLASSES_SERVICE_HOST: courses-service
+      GRADES_SERVICE_HOST: grades-service
+    ports:
+      - "4000:4000"
+    depends_on:
+      users-service:
+        condition: service_started
+      courses-service:
+        condition: service_started
+      grades-service:
+        condition: service_started
+
+  users-service:
+    build:
+      context: ./users-service
+    container_name: users-service
+    environment:
+      DB_HOST: services-database
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_NAME: public
+      DB_PORT: 5432
+      JWT_SECRET: jwtsecret
+    depends_on:
+      services-database:
+        condition: service_healthy
+
+  courses-service:
+    build:
+      context: ./courses-service
+    container_name: courses-service
+    environment:
+      DB_HOST: services-database
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_NAME: public
+      DB_PORT: 5432
+      JWT_SECRET: jwtsecret
+    depends_on:
+      services-database:
+        condition: service_healthy
+      users-service:
+        condition: service_started
+
+  grades-service:
+    build:
+      context: ./grades-service
+    container_name: grades-service
+    environment:
+      DB_HOST: services-database
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_NAME: public
+      DB_PORT: 5432
+      JWT_SECRET: jwtsecret
+    depends_on:
+      services-database:
+        condition: service_healthy
+      courses-service:
+        condition: service_started
+
+  frontend:
+    build:
+      context: ./front
+    container_name: frontend
+    ports:
+      - "3000:3000"

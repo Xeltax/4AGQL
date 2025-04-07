@@ -30,7 +30,7 @@ sequelize.sync().then(async () => {
     loadDefaultDataAsync()
         .then(() => console.log('Successfully preload data'))
         .catch(err => console.error('Failed to preload data', err))
-    app.listen(8080, () => console.log(`Users service listen on port 8080`));
+    app.listen(8080, '0.0.0.0', () => console.log(`Users service listen on port 8080`));
 })
 
 const loadDefaultDataAsync = async () => {

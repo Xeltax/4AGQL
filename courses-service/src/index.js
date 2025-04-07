@@ -7,8 +7,6 @@ const {RootQuery, Mutations} = require("./graphql/resolvers");
 const User = require("./models/user.model");
 const Course = require("./models/course.model")
 
-const PORT = process.env.PORT || 8081;
-
 const app = express()
 const schema = new GraphQLSchema({ query: RootQuery, mutation: Mutations })
 app.use('/graphql', createHandler({
@@ -32,7 +30,7 @@ sequelize.sync().then(async () => {
     loadDefaultDataAsync()
         .then(() => console.log('Successfully preload data'))
         .catch(err => console.error('Failed to preload data', err))
-    app.listen(PORT, () => console.log(`Classes service listening on port ${PORT}`));
+    app.listen(8081, '0.0.0.0', () => console.log(`Classes service listening on port 8081`));
 })
 
 const loadDefaultDataAsync = async () => {

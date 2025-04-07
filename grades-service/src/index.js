@@ -9,8 +9,6 @@ const Course = require("./models/course.model")
 const Grade = require('./models/garde.model')
 const {getGradesForStudent} = require("./repositories/grades-repository");
 
-const PORT = process.env.PORT || 8082;
-
 const app = express()
 const schema = new GraphQLSchema({ query: RootQuery, mutation: Mutations })
 app.use('/graphql', createHandler({
@@ -34,7 +32,7 @@ sequelize.sync().then(async () => {
     loadDefaultDataAsync()
         .then(() => console.log('Successfully preload data'))
         .catch(err => console.error('Failed to preload data', err))
-    app.listen(PORT, () => console.log(`Classes service listening on port ${PORT}`));
+    app.listen(8082, '0.0.0.0', () => console.log(`Classes service listening on port 8082`));
 })
 
 const loadDefaultDataAsync = async () => {
