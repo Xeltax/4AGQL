@@ -38,9 +38,9 @@ const loadDefaultDataAsync = async () => {
     const admin = await User.findOne({ where: { email: 'admin@admin.com' }})
     if (!await Course.findOne({ where: { professorId: admin.id } })) {
         await Course.bulkCreate([
-            { name: 'Français', professorId: admin.id },
-            { name: 'Mathématiques', professorId: admin.id },
-            { name: 'Anglais', professorId: admin.id },
+            { name: 'Français', description: 'Cours de Français', professorId: admin.id },
+            { name: 'Mathématiques', description: 'Cours de Mathématiques', professorId: admin.id },
+            { name: 'Anglais', description: 'Cours d\'Anglais', professorId: admin.id },
         ], { validate: true, ignoreDuplicates: true })
     }
 

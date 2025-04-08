@@ -9,22 +9,22 @@ const QUERY_OPTIONS = {
         {
             model: Course,
             as: 'course',
-            attributes: ['id', 'name'],
+            attributes: ['id', 'name', 'description'],
             include: [
                 {
                     model: User,
                     as: 'professor',
-                    attributes: ['id', 'pseudo', 'email'],
+                    // attributes: ['id', 'pseudo', 'email'],
                     include: [
                         {
                             model: Course,
                             as: 'taughtCourses',
-                            attributes: ['id', 'name']
+                            // attributes: ['id', 'name', 'description']
                         },
                         {
                             model: Course,
                             as: 'enrolledCourses',
-                            attributes: ['id', 'name']
+                            // attributes: ['id', 'name', 'description']
                         }
                     ]
                 }
@@ -38,12 +38,12 @@ const QUERY_OPTIONS = {
                 {
                     model: Course,
                     as: 'enrolledCourses',
-                    attributes: ['id', 'name']
+                    attributes: ['id', 'name', 'description']
                 },
                 {
                     model: Course,
                     as: 'taughtCourses',
-                    attributes: ['id', 'name']
+                    attributes: ['id', 'name', 'description']
                 }
             ]
         }

@@ -12,6 +12,9 @@ const Course = sequelize.define('courses', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    description: {
+        type: DataTypes.TEXT,
+    },
     professorId: {
         type: DataTypes.UUID,
         references: {

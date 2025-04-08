@@ -12,12 +12,12 @@ const QUERY_OPTIONS = {
                 {
                     model: Course, // Inclusion circulaire pour les cours enseignés par le professeur
                     as: 'taughtCourses',
-                    attributes: ['id', 'name'],
+                    attributes: ['id', 'name', 'description'],
                 },
                 {
                     model: Course, // Inclusion circulaire pour les cours suivis par l'étudiant
                     as: 'enrolledCourses',
-                    attributes: ['id', 'name'],
+                    attributes: ['id', 'name', 'description'],
                 }
             ]
         },
@@ -30,12 +30,12 @@ const QUERY_OPTIONS = {
                 {
                     model: Course, // Inclusion circulaire pour les cours enseignés par le professeur
                     as: 'taughtCourses',
-                    attributes: ['id', 'name'],
+                    attributes: ['id', 'name', 'description'],
                 },
                 {
                     model: Course, // Insertion circulaire pour les cours suivis par l'étudiant
                     as: 'enrolledCourses',
-                    attributes: ['id', 'name'],
+                    attributes: ['id', 'name', 'description'],
                 }
             ]
         }

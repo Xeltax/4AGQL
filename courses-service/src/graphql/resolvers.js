@@ -44,6 +44,7 @@ const Mutations = new GraphQLObjectType({
             args: {
                 courseId: { type: new GraphQLNonNull(GraphQLString) },
                 name: { type: GraphQLString },
+                description: { type: GraphQLString },
                 professorId: { type: GraphQLString },
             },
             resolve: async (_, args, { user }) => {

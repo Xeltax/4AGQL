@@ -17,6 +17,7 @@ const CourseType = new GraphQLObjectType({
     fields: () => ({
         id: { type: GraphQLString },
         name: { type: GraphQLString },
+        description: { type: GraphQLString },
         professor: { type: UserType },                  // One to many
         students: { type: new GraphQLList(UserType) }   // Many to one
     })
