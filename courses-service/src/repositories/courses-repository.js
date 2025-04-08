@@ -12,12 +12,12 @@ const QUERY_OPTIONS = {
                 {
                     model: Course, // Inclusion circulaire pour les cours enseignés par le professeur
                     as: 'taughtCourses',
-                    attributes: ['id', 'name', 'description'],
+                    attributes: ['id', 'name', 'description', 'startDate', 'endDate', 'hours'],
                 },
                 {
                     model: Course, // Inclusion circulaire pour les cours suivis par l'étudiant
                     as: 'enrolledCourses',
-                    attributes: ['id', 'name', 'description'],
+                    attributes: ['id', 'name', 'description', 'startDate', 'endDate', 'hours'],
                 }
             ]
         },
@@ -30,12 +30,12 @@ const QUERY_OPTIONS = {
                 {
                     model: Course, // Inclusion circulaire pour les cours enseignés par le professeur
                     as: 'taughtCourses',
-                    attributes: ['id', 'name', 'description'],
+                    attributes: ['id', 'name', 'description', 'startDate', 'endDate', 'hours'],
                 },
                 {
                     model: Course, // Insertion circulaire pour les cours suivis par l'étudiant
                     as: 'enrolledCourses',
-                    attributes: ['id', 'name', 'description'],
+                    attributes: ['id', 'name', 'description', 'startDate', 'endDate', 'hours'],
                 }
             ]
         }
@@ -61,24 +61,38 @@ const getCoursesByNameLike = async (name) => {
     })
 }
 
-const createCourse = async (name, professorId) => {
+const createCourse = async (name, professorId, description, startDate, endDate, hours) => {
     const professor = await User.findByPk(professorId)
     if (professor.role !== 'ROLE_ADMIN') {
         throw new Error('This user is not a professor')
     }
 
-    return await Course.create({
+    checkCourseArgs(startDate, endDate, hours)
+
+    const created = await Course.create({
         name,
-        professorId
+        professorId,
+        description,
+        startDate: parseDate(startDate),
+        endDate: parseDate(endDate),
+        hours,
     });
+
+    return await Course.findByPk(created.id, QUERY_OPTIONS)
 };
 
-const updateCourse = async (id, name, professorId) => {
+const updateCourse = async (id, name, professorId, description, startDate, endDate, hours) => {
     const course = await Course.findOne({ where: { id } });
     if (!course) throw new Error('Course not found');
 
+    checkCourseArgs(startDate, endDate, hours)
+
     course.name = name || course.name;
     course.professorId = professorId || course.professorId;
+    course.description = description || course.description;
+    course.startDate = startDate ? parseDate(startDate) : course.startDate;
+    course.endDate = endDate ? parseDate(endDate) : course.endDate;
+    course.hours = hours || course.hours;
 
     const professor = await User.findByPk(professorId)
     if (professor.role !== 'ROLE_ADMIN') {
@@ -86,7 +100,32 @@ const updateCourse = async (id, name, professorId) => {
     }
 
     await course.save();
-    return course;
+    return await Course.findByPk(id, QUERY_OPTIONS);
+};
+
+const checkCourseArgs = (startDate, endDate, hours) => {
+    if (startDate < Date.now()) {
+        throw new Error('Start date cannot be before current date')
+    }
+
+    if (endDate < startDate) {
+        throw new Error('End date cannot be before start date')
+    }
+
+    if (hours <= 0) {
+        throw new Error('Course cannot have 0 or negative hours')
+    }
+}
+
+const parseDate = (date) => {
+    if (!date) {
+        return undefined
+    }
+    try {
+        return new Date(Number(date) * 1000)
+    } catch (err) {
+        return new Date(date)
+    }
 };
 
 const updateCourseStudents = async (courseId, userId, action) => {

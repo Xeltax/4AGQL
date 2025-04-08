@@ -1,6 +1,6 @@
 const { GraphQLObjectType, GraphQLList, GraphQLString, GraphQLNonNull } = require('graphql');
 const {CourseType} = require("./types");
-const {GraphQLEnumType} = require("graphql/type");
+const {GraphQLEnumType, GraphQLInt} = require("graphql/type");
 const {getAllCourses, getCourseById, getCoursesByNameLike, createCourse, updateCourse, updateCourseStudents,
     deleteCourse
 } = require("../repositories/courses-repository");
@@ -32,11 +32,15 @@ const Mutations = new GraphQLObjectType({
             type: CourseType,
             args: {
                 name: { type: new GraphQLNonNull(GraphQLString) },
+                description: { type: GraphQLString },
+                startDate: { type: GraphQLString },
+                endDate: { type: GraphQLString },
+                hours: { type: GraphQLInt },
                 professorId: { type: new GraphQLNonNull(GraphQLString) },
             },
-            resolve: async (_, { name, professor }, { user }) => {
+            resolve: async (_, { name, professorId, description, startDate, endDate, hours }, { user }) => {
                 checkUserAuthorizations(user)
-                return await createCourse(name, professor)
+                return await createCourse(name, professorId, description, startDate, endDate, hours)
             }
         },
         updateCourse: {
@@ -45,6 +49,9 @@ const Mutations = new GraphQLObjectType({
                 courseId: { type: new GraphQLNonNull(GraphQLString) },
                 name: { type: GraphQLString },
                 description: { type: GraphQLString },
+                startDate: { type: GraphQLString },
+                endDate: { type: GraphQLString },
+                hours: { type: GraphQLInt },
                 professorId: { type: GraphQLString },
             },
             resolve: async (_, args, { user }) => {

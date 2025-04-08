@@ -15,6 +15,20 @@ const Course = sequelize.define('courses', {
     description: {
         type: DataTypes.TEXT,
     },
+    startDate: {
+        type: DataTypes.DATEONLY,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+    },
+    endDate: {
+        type: DataTypes.DATEONLY,
+        allowNull: false,
+    },
+    hours: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 10,
+    },
     professorId: {
         type: DataTypes.UUID,
         references: {

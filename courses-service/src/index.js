@@ -38,9 +38,9 @@ const loadDefaultDataAsync = async () => {
     const admin = await User.findOne({ where: { email: 'admin@admin.com' }})
     if (!await Course.findOne({ where: { professorId: admin.id } })) {
         await Course.bulkCreate([
-            { name: 'Français', description: 'Cours de Français', professorId: admin.id },
-            { name: 'Mathématiques', description: 'Cours de Mathématiques', professorId: admin.id },
-            { name: 'Anglais', description: 'Cours d\'Anglais', professorId: admin.id },
+            { name: 'Français', description: 'Cours de Français', professorId: admin.id, startDate: new Date(), endDate: addDays(new Date(), 30), hours: 10 },
+            { name: 'Mathématiques', description: 'Cours de Mathématiques', professorId: admin.id, startDate: new Date(), endDate: addDays(new Date(), 20), hours: 5 },
+            { name: 'Anglais', description: 'Cours d\'Anglais', professorId: admin.id, startDate: new Date(), endDate: addDays(new Date(), 18), hours: 21 },
         ], { validate: true, ignoreDuplicates: true })
     }
 
@@ -52,4 +52,10 @@ const loadDefaultDataAsync = async () => {
     await user.addEnrolledCourse(frenchCourse)
     await user.addEnrolledCourse(mathsCourse)
     await user.addEnrolledCourse(englishCourse)
+}
+
+function addDays(date, days) {
+    const copy = new Date(date);
+    copy.setDate(copy.getDate() + days);
+    return copy;
 }

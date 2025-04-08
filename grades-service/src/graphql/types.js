@@ -1,4 +1,4 @@
-const { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLFloat } = require('graphql');
+const { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLFloat, GraphQLInt } = require('graphql');
 
 const UserType = new GraphQLObjectType({
     name: 'User',
@@ -18,6 +18,9 @@ const CourseType = new GraphQLObjectType({
         id: { type: GraphQLString },
         name: { type: GraphQLString },
         description: { type: GraphQLString },
+        startDate: { type: GraphQLString },
+        endDate: { type: GraphQLString },
+        hours: { type: GraphQLInt },
         professor: { type: UserType },                  // One to many
         students: { type: new GraphQLList(UserType) }   // Many to one
     })
