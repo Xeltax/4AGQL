@@ -23,13 +23,17 @@ const getAllUsers = async () => {
     })
 }
 
-const updateUser = async (id, { email, pseudo, password }) => {
+const updateUser = async (id, { email, pseudo, password, role }, requester) => {
     const user = await User.findByPk(id);
     if (!user) throw new Error('User not found');
 
     if (email) user.email = email;
     if (pseudo) user.pseudo = pseudo;
     if (password) user.password = await bcrypt.hash(password, 10);
+
+    if (requester.role === 'ROLE_ADMIN' && role) {
+        user.role = role
+    }
 
     return user.save();
 };

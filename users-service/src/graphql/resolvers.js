@@ -34,11 +34,12 @@ const Mutations = new GraphQLObjectType({
                 id: { type: new GraphQLNonNull(GraphQLString) },
                 email: { type: GraphQLString },
                 pseudo: { type: GraphQLString },
-                password: { type: GraphQLString }
+                password: { type: GraphQLString },
+                role: { type: GraphQLString }
             },
             resolve: async (_, args, { user }) => {
                 checkUserAuthorizations(args.id, user)
-                return await updateUser(args.id, args)
+                return await updateUser(args.id, args, user)
             }
         },
         deleteUser: {
