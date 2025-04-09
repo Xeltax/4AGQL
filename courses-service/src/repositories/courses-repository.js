@@ -67,8 +67,6 @@ const createCourse = async (name, professorId, description, startDate, endDate, 
         throw new Error('This user is not a professor')
     }
 
-    // checkCourseArgs(startDate, endDate, hours)
-
     const created = await Course.create({
         name,
         professorId,
@@ -85,13 +83,11 @@ const updateCourse = async (id, name, professorId, description, startDate, endDa
     const course = await Course.findOne({ where: { id } });
     if (!course) throw new Error('Course not found');
 
-    checkCourseArgs(startDate, endDate, hours)
-
     course.name = name || course.name;
     course.professorId = professorId || course.professorId;
     course.description = description || course.description;
-    course.startDate = startDate ? startDate : course.startDate;
-    course.endDate = endDate ? endDate : course.endDate;
+    course.startDate = startDate || course.startDate;
+    course.endDate = endDate || course.endDate;
     course.hours = hours || course.hours;
 
     const professor = await User.findByPk(professorId)
@@ -101,31 +97,6 @@ const updateCourse = async (id, name, professorId, description, startDate, endDa
 
     await course.save();
     return await Course.findByPk(id, QUERY_OPTIONS);
-};
-
-const checkCourseArgs = (startDate, endDate, hours) => {
-    if (startDate < Date.now()) {
-        throw new Error('Start date cannot be before current date')
-    }
-
-    if (endDate < startDate) {
-        throw new Error('End date cannot be before start date')
-    }
-
-    if (hours <= 0) {
-        throw new Error('Course cannot have 0 or negative hours')
-    }
-}
-
-const parseDate = (date) => {
-    if (!date) {
-        return undefined
-    }
-    try {
-        return new Date(Number(date) * 1000)
-    } catch (err) {
-        return new Date(date)
-    }
 };
 
 const updateCourseStudents = async (courseId, userId, action) => {
