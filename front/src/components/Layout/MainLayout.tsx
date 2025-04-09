@@ -118,15 +118,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                             height: 64,
                         }}
                     />
-                    <div style={{ marginRight: 20 }}>
-                        <span>John Doe</span>
-                        <Button
-                            type="text"
-                            shape="circle"
-                            icon={<UserOutlined />}
-                            style={{ marginLeft: 10 }}
-                        />
-                    </div>
                 </Header>
                 <Content
                     style={{

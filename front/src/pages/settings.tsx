@@ -30,6 +30,7 @@ import Layout from '../components/Layout/MainLayout';
 import { client } from '../lib/apolloClient';
 import { GET_USER_BY_EMAIL, UPDATE_USER } from '../graphql/users';
 import { parse } from 'cookie';
+import {getCookie} from "cookies-next";
 
 const { Title, Text } = Typography;
 const { TabPane } = Tabs;
@@ -64,9 +65,16 @@ const UserSettings: NextPage<UserSettingsProps> = ({ userData, error }) => {
     const [passwordForm] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const [activeTab, setActiveTab] = useState('1');
+    const token = getCookie('JWT') || '';
 
     // Mutation pour mettre à jour l'utilisateur
-    const [updateUser] = useMutation(UPDATE_USER);
+    const [updateUser] = useMutation(UPDATE_USER, {
+        context: {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        }
+    });
 
     // Si erreur
     if (error) {
@@ -172,7 +180,6 @@ const UserSettings: NextPage<UserSettingsProps> = ({ userData, error }) => {
                                                             return false;
                                                         }}
                                                     >
-                                                        <Button icon={<UploadOutlined />}>Changer l'avatar</Button>
                                                     </Upload>
                                                 </div>
                                                 <Divider />

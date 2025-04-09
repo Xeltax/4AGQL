@@ -31,6 +31,7 @@ import { useMutation } from '@apollo/client';
 import { parse } from 'cookie';
 import { client } from '../lib/apolloClient';
 import { GET_ALL_USERS, REGISTER, UPDATE_USER, DELETE_USER } from '../graphql/users';
+import {getCookie} from "cookies-next";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -60,6 +61,7 @@ const Students: NextPage<StudentsProps> = ({ users, error }) => {
     const [studentsList, setStudentsList] = useState<User[]>(users || []);
     const [addForm] = Form.useForm();
     const [editForm] = Form.useForm();
+    const token = getCookie('JWT') || '';
 
     // Afficher un message d'erreur si nécessaire
     if (error) {
@@ -82,6 +84,11 @@ const Students: NextPage<StudentsProps> = ({ users, error }) => {
     });
 
     const [updateUser, { loading: updateLoading }] = useMutation(UPDATE_USER, {
+        context: {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        },
         onCompleted: (data) => {
             message.success('Étudiant modifié avec succès');
             setIsEditModalVisible(false);
@@ -96,6 +103,11 @@ const Students: NextPage<StudentsProps> = ({ users, error }) => {
     });
 
     const [deleteUser, { loading: deleteLoading }] = useMutation(DELETE_USER, {
+        context: {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        },
         onCompleted: (data) => {
             message.success('Étudiant supprimé avec succès');
             setIsDeleteModalVisible(false);
@@ -139,6 +151,8 @@ const Students: NextPage<StudentsProps> = ({ users, error }) => {
 
     const handleEditSubmit = (values: any) => {
         if (!currentUser) return;
+
+        console.log(values);
 
         updateUser({
             variables: {

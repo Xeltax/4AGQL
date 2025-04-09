@@ -628,6 +628,7 @@ const Schedule: NextPage = () => {
         <Layout>
             <div className="schedule-page">
                 <Row justify="space-between" align="middle" style={{ marginBottom: 20 }}>
+                        <h2 style={{color : "red", textAlign : "center", width : "100%"}}>Page de visualisation ! </h2>
                     <Col>
                         <Title level={2}>Emploi du temps</Title>
                         <Text type="secondary">Gestion et visualisation des emplois du temps</Text>

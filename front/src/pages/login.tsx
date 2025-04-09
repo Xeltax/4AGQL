@@ -4,7 +4,7 @@ import Title from "antd/es/typography/Title";
 import {useRouter} from "next/router";
 import {LockOutlined, UserOutlined} from "@ant-design/icons";
 import { useMutation } from '@apollo/client';
-import { LOGIN } from '../graphql/users';
+import { LOGIN } from '@/graphql/users';
 import {setCookie} from "cookies-next";
 
 const Login = () => {

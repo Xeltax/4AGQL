@@ -58,10 +58,28 @@ export const GET_COURSES_BY_NAME = gql`
 
 // Mutation pour créer un cours
 export const CREATE_COURSE = gql`
-  mutation CreateCourse($name: String!, $professorId: String!) {
-    createCourse(name: $name, professorId: $professorId) {
+  mutation CreateCourse(
+        $name: String!, 
+        $professorId: String!, 
+        $description: String, 
+        $startDate: String, 
+        $endDate: String!, 
+        $hours: Int!
+    ) {
+    createCourse(
+      name: $name, 
+      professorId: $professorId, 
+      description: $description, 
+      startDate: $startDate, 
+      endDate: $endDate, 
+      hours: $hours
+    ) {
       id
       name
+      description
+      hours
+      startDate
+      endDate
       professor {
         id
         pseudo
@@ -72,10 +90,31 @@ export const CREATE_COURSE = gql`
 
 // Mutation pour mettre à jour un cours
 export const UPDATE_COURSE = gql`
-  mutation UpdateCourse($courseId: String!, $name: String, $professorId: String) {
-    updateCourse(courseId: $courseId, name: $name, professorId: $professorId) {
+  mutation UpdateCourse(
+    $courseId: String!, 
+    $name: String, 
+    $description: String,
+    $startDate: String,
+    $endDate: String,
+    $hours: Int,
+    $professorId: String
+  ) {
+    updateCourse(
+        courseId: $courseId,
+        name: $name,
+        description: $description,
+        startDate: $startDate,
+        endDate: $endDate,
+        hours: $hours,
+        professorId: $professorId
+    ) {
       id
       name
+      description
+      hours
+      startDate
+      endDate
+       
       professor {
         id
         pseudo
