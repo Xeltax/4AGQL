@@ -15,7 +15,7 @@ import {
     Statistic,
     Modal,
     Form,
-    message
+    message, DatePicker
 } from 'antd';
 import {
     BookOutlined,
@@ -41,6 +41,8 @@ import {
     DELETE_COURSE
 } from '../graphql/courses';
 import { GET_ALL_USERS } from '../graphql/users';
+import {getCookie} from "cookies-next";
+import moment from "moment";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -48,6 +50,10 @@ const { Option } = Select;
 interface Course {
     id: string;
     name: string;
+    description: string;
+    hours: number;
+    startDate: string;
+    endDate: string;
     professor: {
         id: string;
         email: string;
@@ -84,6 +90,7 @@ const Courses: NextPage<CoursesProps> = ({ courses: initialCourses, professors, 
     const [currentCourse, setCurrentCourse] = useState<Course | null>(null);
     const [addForm] = Form.useForm();
     const [editForm] = Form.useForm();
+    const token = getCookie('JWT') || '';
 
     // Afficher un message d'erreur si nécessaire
     if (error) {
@@ -92,6 +99,11 @@ const Courses: NextPage<CoursesProps> = ({ courses: initialCourses, professors, 
 
     // Mutations GraphQL
     const [createCourse, { loading: createLoading }] = useMutation(CREATE_COURSE, {
+        context: {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        },
         onCompleted: (data) => {
             message.success('Cours ajouté avec succès');
             setIsAddModalVisible(false);
@@ -100,11 +112,17 @@ const Courses: NextPage<CoursesProps> = ({ courses: initialCourses, professors, 
             setCoursesList([...coursesList, data.createCourse]);
         },
         onError: (error) => {
+            console.log(error)
             message.error(`Erreur lors de l'ajout: ${error.message}`);
         }
     });
 
     const [updateCourse, { loading: updateLoading }] = useMutation(UPDATE_COURSE, {
+        context: {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        },
         onCompleted: (data) => {
             message.success('Cours modifié avec succès');
             setIsEditModalVisible(false);
@@ -119,6 +137,11 @@ const Courses: NextPage<CoursesProps> = ({ courses: initialCourses, professors, 
     });
 
     const [deleteCourse, { loading: deleteLoading }] = useMutation(DELETE_COURSE, {
+        context: {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        },
         onCompleted: (data) => {
             message.success('Cours supprimé avec succès');
             setIsDeleteModalVisible(false);
@@ -139,6 +162,10 @@ const Courses: NextPage<CoursesProps> = ({ courses: initialCourses, professors, 
         setCurrentCourse(course);
         editForm.setFieldsValue({
             name: course.name,
+            description: course.description,
+            hours: course.hours,
+            startDate: moment(course.startDate),
+            endDate: moment(course.endDate),
             professorId: course.professor?.id
         });
         setIsEditModalVisible(true);
@@ -150,9 +177,26 @@ const Courses: NextPage<CoursesProps> = ({ courses: initialCourses, professors, 
     };
 
     const handleAddSubmit = (values: any) => {
+        console.log('startDate type:', typeof values.startDate, values.startDate);
+        console.log('endDate type:', typeof values.endDate, values.endDate);
+
+        const isDateValid = (dateStr: string) => {
+            return /^\d{4}-\d{2}-\d{2}$/.test(dateStr); // Format YYYY-MM-DD
+        };
+
+        // S'assurer que les dates sont valides
+        if (!isDateValid(values.startDate) || !isDateValid(values.endDate)) {
+            message.error("Format de date invalide. Utilisez le format YYYY-MM-DD.");
+            return;
+        }
+
         createCourse({
             variables: {
                 name: values.name,
+                description: values.description,
+                hours: Number(values.hours),
+                startDate: values.startDate,
+                endDate: values.endDate,
                 professorId: values.professorId
             }
         });
@@ -165,6 +209,10 @@ const Courses: NextPage<CoursesProps> = ({ courses: initialCourses, professors, 
             variables: {
                 courseId: currentCourse.id,
                 name: values.name,
+                description: values.description,
+                hours: Number(values.hours),
+                startDate: values.startDate,
+                endDate: values.endDate,
                 professorId: values.professorId
             }
         });
@@ -354,6 +402,48 @@ const Courses: NextPage<CoursesProps> = ({ courses: initialCourses, professors, 
                         </Form.Item>
 
                         <Form.Item
+                            name="description"
+                            label="Description du cours"
+                            rules={[{ required: true, message: 'Veuillez entrer la description du cours' }]}
+                        >
+                            <Input placeholder="ex: Cours sur le développement" />
+                        </Form.Item>
+
+                        <Form.Item
+                            name="hours"
+                            label="Nombre d'heure"
+                            rules={[{ required: true, message: 'Veuillez entrer le nombre d\'heure du cours' }]}
+                        >
+                            <Input type={"number"} placeholder="ex: 5" />
+                        </Form.Item>
+
+                        <Form.Item
+                            name="startDate"
+                            label="Date de début"
+                            rules={[{ required: true, message: 'Veuillez entrer la date de début du cours' }]}
+                            getValueProps={(value) => ({ value: value ? moment(value) : null })}
+                            getValueFromEvent={(date) => date ? date.format('YYYY-MM-DD') : null}
+                        >
+                            <DatePicker
+                                style={{ width: '100%' }}
+                                format="DD/MM/YYYY"
+                            />
+                        </Form.Item>
+
+                        <Form.Item
+                            name="endDate"
+                            label="Date de fin"
+                            rules={[{ required: true, message: 'Veuillez entrer la date de fin du cours' }]}
+                            getValueProps={(value) => ({ value: value ? moment(value) : null })}
+                            getValueFromEvent={(date) => date ? date.format('YYYY-MM-DD') : null}
+                        >
+                            <DatePicker
+                                style={{ width: '100%' }}
+                                format="DD/MM/YYYY"
+                            />
+                        </Form.Item>
+
+                        <Form.Item
                             name="professorId"
                             label="Professeur"
                             rules={[{ required: true, message: 'Veuillez sélectionner un professeur' }]}
@@ -401,6 +491,48 @@ const Courses: NextPage<CoursesProps> = ({ courses: initialCourses, professors, 
                             rules={[{ required: true, message: 'Veuillez entrer le nom du cours' }]}
                         >
                             <Input placeholder="ex: Programmation Orientée Objet" />
+                        </Form.Item>
+
+                        <Form.Item
+                            name="description"
+                            label="Description du cours"
+                            rules={[{ required: true, message: 'Veuillez entrer la description du cours' }]}
+                        >
+                            <Input placeholder="ex: Cours sur le développement" />
+                        </Form.Item>
+
+                        <Form.Item
+                            name="hours"
+                            label="Nombre d'heure"
+                            rules={[{ required: true, message: 'Veuillez entrer le nombre d\'heure du cours' }]}
+                        >
+                            <Input type={"number"} placeholder="ex: 5" />
+                        </Form.Item>
+
+                        <Form.Item
+                            name="startDate"
+                            label="Date de début"
+                            rules={[{ required: true, message: 'Veuillez entrer la date de début du cours' }]}
+                            getValueProps={(value) => ({ value: value ? moment(value) : null })}
+                            getValueFromEvent={(date) => date ? date.format('YYYY-MM-DD') : null}
+                        >
+                            <DatePicker
+                                style={{ width: '100%' }}
+                                format="DD/MM/YYYY"
+                            />
+                        </Form.Item>
+
+                        <Form.Item
+                            name="endDate"
+                            label="Date de fin"
+                            rules={[{ required: true, message: 'Veuillez entrer la date de fin du cours' }]}
+                            getValueProps={(value) => ({ value: value ? moment(value) : null })}
+                            getValueFromEvent={(date) => date ? date.format('YYYY-MM-DD') : null}
+                        >
+                            <DatePicker
+                                style={{ width: '100%' }}
+                                format="DD/MM/YYYY"
+                            />
                         </Form.Item>
 
                         <Form.Item

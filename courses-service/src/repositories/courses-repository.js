@@ -67,14 +67,14 @@ const createCourse = async (name, professorId, description, startDate, endDate, 
         throw new Error('This user is not a professor')
     }
 
-    checkCourseArgs(startDate, endDate, hours)
+    // checkCourseArgs(startDate, endDate, hours)
 
     const created = await Course.create({
         name,
         professorId,
         description,
-        startDate: parseDate(startDate),
-        endDate: parseDate(endDate),
+        startDate: startDate,
+        endDate: endDate,
         hours,
     });
 
@@ -90,8 +90,8 @@ const updateCourse = async (id, name, professorId, description, startDate, endDa
     course.name = name || course.name;
     course.professorId = professorId || course.professorId;
     course.description = description || course.description;
-    course.startDate = startDate ? parseDate(startDate) : course.startDate;
-    course.endDate = endDate ? parseDate(endDate) : course.endDate;
+    course.startDate = startDate ? startDate : course.startDate;
+    course.endDate = endDate ? endDate : course.endDate;
     course.hours = hours || course.hours;
 
     const professor = await User.findByPk(professorId)

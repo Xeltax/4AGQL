@@ -327,54 +327,6 @@ const GradesPage: NextPage<GradesPageProps> = ({ gradesData, coursesData, usersD
             key: 'comment',
             ellipsis: true,
         },
-        {
-            title: 'Actions',
-            key: 'actions',
-            render: (text: string, record: Grade) => (
-                <Space size="small">
-                    <Tooltip title="Voir détails">
-                        <Button
-                            icon={<EyeOutlined />}
-                            size="small"
-                            type="primary"
-                            onClick={() => {
-                                Modal.info({
-                                    title: 'Détails de la note',
-                                    content: (
-                                        <div>
-                                            <p><strong>Étudiant:</strong> {record.student.pseudo} ({record.student.email})</p>
-                                            <p><strong>Cours:</strong> {record.course.name}</p>
-                                            <p><strong>Note:</strong> {record.note.toFixed(1)} / 20</p>
-                                            <p><strong>Commentaire:</strong> {record.comment || "Aucun commentaire"}</p>
-                                        </div>
-                                    ),
-                                    width: 500
-                                });
-                            }}
-                        />
-                    </Tooltip>
-                    {userRole === "PROFESSOR" && (
-                        <>
-                            <Tooltip title="Modifier">
-                                <Button
-                                    icon={<EditOutlined />}
-                                    size="small"
-                                    onClick={() => showEditGradeModal(record)}
-                                />
-                            </Tooltip>
-                            <Tooltip title="Supprimer">
-                                <Button
-                                    icon={<DeleteOutlined />}
-                                    danger
-                                    size="small"
-                                    onClick={() => showDeleteGradeConfirm(record.id)}
-                                />
-                            </Tooltip>
-                        </>
-                    )}
-                </Space>
-            ),
-        },
     ];
 
     // Si erreur
